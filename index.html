@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>株式会社Buddy｜営業代行 - 伴走という、営業のかたち。</title>
+<meta name="description" content="株式会社Buddyは東京・浜松町を拠点とする営業代行会社です。クライアントの一員として並走し、新規開拓から商談、営業の型づくりまでを担います。">
+<meta property="og:title" content="株式会社Buddy｜営業代行">
+<meta property="og:description" content="伴走という、営業のかたち。東京・浜松町の営業代行会社、株式会社Buddy。">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#101825">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Barlow+Condensed:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   株式会社Buddy - Brand Site
+   Concept : 併走する二本の軌道（浜松町＝東京モノレールの起点）
+   ============================================================ */
+
+:root{
+  --ink:        #101825;   /* 濃藍：夜の東京湾 */
+  --ink-soft:   #182231;   /* 藍鉄：面 */
+  --ink-deep:   #0A101A;   /* 最深部 */
+  --snow:       #E9EDF1;   /* 白練：本文 */
+  --snow-dim:   rgba(233,237,241,.62);
+  --snow-faint: rgba(233,237,241,.34);
+  --asagi:      #2E9AA3;   /* 浅葱：進行信号 */
+  --asagi-lt:   #4FC2C9;
+  --yamabuki:   #DDA82F;   /* 山吹：停車灯 */
+  --steel:      rgba(233,237,241,.14);
+  --steel-2:    rgba(233,237,241,.07);
+
+  --ff-jp-disp: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+  --ff-jp-body: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  --ff-sign:    "Barlow Condensed", "Helvetica Neue", sans-serif;
+  --ff-mono:    "IBM Plex Mono", monospace;
+
+  --pad-x: clamp(20px, 5vw, 72px);
+  --rail-x: 92px;                 /* 左レールの占有幅 */
+  --maxw: 1180px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--snow);
+  font-family:var(--ff-jp-body);
+  font-size:15px;
+  line-height:2.05;
+  letter-spacing:.05em;
+  font-feature-settings:"palt" 1;
+  overflow-x:hidden;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+::selection{ background:var(--asagi); color:var(--ink-deep); }
+:focus-visible{ outline:2px solid var(--yamabuki); outline-offset:3px; }
+
+/* ---------- 共通パーツ ---------- */
+.wrap{ width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:var(--pad-x); }
+.sec{ position:relative; padding-block:clamp(88px,13vw,168px); }
+.sec--rail{ padding-left:var(--rail-x); }
+
+.eyebrow{
+  font-family:var(--ff-sign);
+  font-weight:500;
+  font-size:13px;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--asagi-lt);
+  display:flex; align-items:center; gap:14px;
+  margin:0 0 22px;
+}
+.eyebrow::before{
+  content:""; width:34px; height:1px; background:var(--asagi); flex:none;
+}
+.eyebrow .jp{
+  font-family:var(--ff-jp-body); font-size:11px; letter-spacing:.22em;
+  color:var(--snow-faint);
+}
+.h2{
+  font-family:var(--ff-jp-disp);
+  font-weight:500;
+  font-size:clamp(27px,4.1vw,46px);
+  line-height:1.7;
+  letter-spacing:.06em;
+  margin:0 0 34px;
+}
+.h2 em{ font-style:normal; color:var(--yamabuki); }
+.lead{ max-width:44em; color:var(--snow-dim); margin:0; }
+.mono{ font-family:var(--ff-mono); font-size:11px; letter-spacing:.16em; color:var(--snow-faint); }
+
+/* ---------- 出現アニメーション ---------- */
+.rv{ opacity:0; transform:translateY(26px); transition:opacity .95s ease, transform .95s cubic-bezier(.16,.8,.3,1); }
+.rv.in{ opacity:1; transform:none; }
+.rv[data-d="1"]{ transition-delay:.1s } .rv[data-d="2"]{ transition-delay:.2s }
+.rv[data-d="3"]{ transition-delay:.3s } .rv[data-d="4"]{ transition-delay:.4s }
+
+/* ============================================================
+   ヘッダー
+   ============================================================ */
+.hd{
+  position:fixed; inset:0 0 auto 0; z-index:70;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px var(--pad-x);
+  transition:background .5s ease, backdrop-filter .5s ease, padding .5s ease, border-color .5s;
+  border-bottom:1px solid transparent;
+}
+.hd.stuck{
+  background:rgba(11,17,26,.82);
+  backdrop-filter:blur(14px);
+  border-bottom-color:var(--steel-2);
+  padding-block:12px;
+}
+.logo{ display:flex; align-items:baseline; gap:11px; }
+.logo b{
+  font-family:var(--ff-sign); font-weight:600; font-size:25px;
+  letter-spacing:.16em; line-height:1;
+}
+.logo b span{ color:var(--asagi-lt); }
+.logo small{
+  font-family:var(--ff-jp-body); font-size:10px; letter-spacing:.2em; color:var(--snow-faint);
+}
+.gnav ul{ display:flex; gap:30px; list-style:none; margin:0; padding:0; }
+.gnav a{
+  font-family:var(--ff-sign); font-size:14px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--snow-dim); position:relative; padding-block:5px; transition:color .3s;
+}
+.gnav a::after{
+  content:""; position:absolute; left:0; bottom:0; width:100%; height:1px;
+  background:var(--asagi); transform:scaleX(0); transform-origin:right; transition:transform .45s cubic-bezier(.16,.8,.3,1);
+}
+.gnav a:hover{ color:var(--snow); } .gnav a:hover::after{ transform:scaleX(1); transform-origin:left; }
+.burger{ display:none; }
+
+/* ============================================================
+   ヒーロー：軌道の起点
+   ============================================================ */
+.hero{
+  position:relative; min-height:100svh; overflow:hidden;
+  display:flex; align-items:flex-end;
+  background:var(--ink-deep);
+}
+.hero__bg{ position:absolute; inset:0; }
+.hero__bg img{
+  width:100%; height:100%; object-fit:cover;
+  filter:grayscale(.5) brightness(.44) contrast(1.12) saturate(.8);
+  transform:scale(1.06);
+}
+.hero__veil{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(180deg, rgba(10,16,26,.86) 0%, rgba(10,16,26,.34) 38%, rgba(10,16,26,.94) 100%),
+    radial-gradient(72% 52% at 26% 76%, rgba(46,154,163,.24), transparent 72%);
+}
+.hero__track{ position:absolute; inset:0; pointer-events:none; }
+.hero__track svg{ width:100%; height:100%; display:block; }
+.hero__inner{
+  position:relative; z-index:3; width:100%;
+  padding:0 var(--pad-x) clamp(56px,8vw,96px) calc(var(--pad-x) + var(--rail-x) - 40px);
+  display:flex; align-items:flex-end; justify-content:space-between; gap:40px;
+}
+.hero__copy{ writing-mode:vertical-rl; text-orientation:upright; }
+.hero__copy h1{
+  font-family:var(--ff-jp-disp); font-weight:500;
+  font-size:clamp(30px,5.1vw,60px); line-height:1.62; letter-spacing:.14em;
+  margin:0; text-shadow:0 2px 30px rgba(10,16,26,.75);
+}
+.hero__copy h1 .ac{ color:var(--yamabuki); }
+.hero__copy .sub{
+  writing-mode:vertical-rl; font-size:13px; letter-spacing:.3em; color:var(--snow-dim);
+  margin:0 26px 0 0; padding-top:8px; border-right:1px solid var(--steel); padding-right:22px;
+}
+.hero__meta{ text-align:right; padding-bottom:6px; }
+.hero__meta .en{
+  font-family:var(--ff-sign); font-size:clamp(13px,1.4vw,16px); letter-spacing:.3em;
+  text-transform:uppercase; color:var(--snow-dim); margin:0 0 10px;
+}
+.hero__meta .loc{ font-family:var(--ff-mono); font-size:11px; letter-spacing:.14em; color:var(--snow-faint); margin:0; }
+.hero__scroll{
+  position:absolute; z-index:4; left:calc(var(--pad-x) + 8px); bottom:0;
+  writing-mode:vertical-rl; font-family:var(--ff-sign); font-size:12px; letter-spacing:.32em;
+  text-transform:uppercase; color:var(--snow-faint); padding-bottom:78px;
+}
+.hero__scroll::after{
+  content:""; position:absolute; left:50%; bottom:0; width:1px; height:64px;
+  background:linear-gradient(180deg,var(--asagi),transparent);
+  animation:drop 2.4s ease-in-out infinite;
+}
+@keyframes drop{ 0%{transform:scaleY(0);transform-origin:top} 55%{transform:scaleY(1);transform-origin:top} 56%{transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+/* ============================================================
+   シグネチャー：左端を走る二本の軌道（スクロール進行）
+   ============================================================ */
+.rail{
+  position:fixed; z-index:60; left:calc(var(--pad-x) - 6px); top:0; bottom:0; width:52px;
+  pointer-events:none; opacity:0; transition:opacity .7s ease;
+}
+.rail.on{ opacity:1; }
+.rail__line{ position:absolute; top:0; bottom:0; width:1px; background:var(--steel); }
+.rail__line.a{ left:16px; } .rail__line.b{ left:36px; }
+.rail__ties{ position:absolute; inset:0; }
+.rail__tie{ position:absolute; left:14px; width:24px; height:1px; background:var(--steel-2); }
+.rail__prog{
+  position:absolute; left:16px; top:0; width:21px; border-left:1px solid var(--asagi); border-right:1px solid var(--asagi);
+  height:0; opacity:.55;
+}
+.rail__car{
+  position:absolute; left:11px; top:0; width:31px; height:31px; margin-top:-15px;
+  display:grid; place-items:center;
+}
+.rail__car::before{
+  content:""; width:9px; height:9px; background:var(--yamabuki); transform:rotate(45deg);
+  box-shadow:0 0 0 5px rgba(221,168,47,.14), 0 0 22px rgba(221,168,47,.5);
+}
+.rail__stops{ position:absolute; inset:0; }
+.rail__stop{
+  position:absolute; left:26px; transform:translate(-50%,-50%);
+  width:7px; height:7px; border:1px solid var(--snow-faint); border-radius:50%;
+  background:var(--ink); transition:border-color .4s, background .4s, box-shadow .4s;
+}
+.rail__stop span{
+  position:absolute; left:15px; top:50%; transform:translateY(-50%);
+  font-family:var(--ff-sign); font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--snow-faint); white-space:nowrap; opacity:0; transition:opacity .4s, color .4s;
+}
+.rail__stop.act{ border-color:var(--asagi-lt); background:var(--asagi); box-shadow:0 0 16px rgba(79,194,201,.55); }
+.rail__stop.act span{ opacity:1; color:var(--asagi-lt); }
+
+/* ============================================================
+   イントロ（社名の意味）
+   ============================================================ */
+.intro{ background:linear-gradient(180deg,var(--ink-deep),var(--ink)); border-bottom:1px solid var(--steel-2); }
+.intro__grid{ display:grid; grid-template-columns:1fr auto; gap:clamp(28px,6vw,88px); align-items:center; }
+.intro p{ font-size:clamp(16px,1.9vw,20px); line-height:2.5; letter-spacing:.09em; margin:0; font-family:var(--ff-jp-disp); }
+.intro .word{
+  font-family:var(--ff-sign); font-size:clamp(56px,10vw,132px); font-weight:300; line-height:.86;
+  letter-spacing:.03em; color:transparent; -webkit-text-stroke:1px var(--steel);
+  writing-mode:horizontal-tb; white-space:nowrap;
+}
+.intro .word i{ font-style:normal; -webkit-text-stroke:1px rgba(46,154,163,.5); }
+
+/* ============================================================
+   CONCEPT
+   ============================================================ */
+.concept{ background:var(--ink); }
+.concept__grid{
+  display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(32px,6vw,80px); align-items:center;
+}
+.concept__fig{ position:relative; }
+.concept__fig img{
+  aspect-ratio:4/5; object-fit:cover; width:100%;
+  filter:grayscale(.62) brightness(.72) contrast(1.1);
+}
+.concept__fig::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(200deg, rgba(46,154,163,.2), transparent 55%);
+  mix-blend-mode:screen;
+}
+.concept__fig figcaption{
+  position:absolute; left:0; bottom:-30px;
+  font-family:var(--ff-mono); font-size:10px; letter-spacing:.14em; color:var(--snow-faint);
+}
+.concept__body p{ color:var(--snow-dim); margin:0 0 22px; }
+.concept__body p:last-child{ margin-bottom:0; }
+.concept__body strong{ color:var(--snow); font-weight:500; }
+.pull{
+  border-left:2px solid var(--yamabuki); padding:4px 0 4px 22px; margin:34px 0 0;
+  font-family:var(--ff-jp-disp); font-size:clamp(17px,2vw,21px); line-height:2.1; letter-spacing:.08em; color:var(--snow);
+}
+
+/* ============================================================
+   SERVICE
+   ============================================================ */
+.service{ background:var(--ink-soft); }
+.svc{ display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--steel-2); margin-top:56px; border:1px solid var(--steel-2); }
+.svc__item{ background:var(--ink-soft); padding:clamp(28px,3.4vw,44px); position:relative; transition:background .5s ease; }
+.svc__item:hover{ background:var(--ink); }
+.svc__no{ font-family:var(--ff-mono); font-size:11px; letter-spacing:.2em; color:var(--asagi-lt); }
+.svc__item h3{
+  font-family:var(--ff-jp-disp); font-weight:500; font-size:clamp(19px,2.2vw,24px);
+  letter-spacing:.08em; margin:14px 0 16px; line-height:1.6;
+}
+.svc__item p{ color:var(--snow-dim); font-size:14px; margin:0; }
+.svc__item ul{ list-style:none; margin:20px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
+.svc__item li{
+  font-family:var(--ff-mono); font-size:10px; letter-spacing:.1em; color:var(--snow-faint);
+  border:1px solid var(--steel); padding:4px 10px;
+}
+.svc__band{ margin-top:64px; position:relative; overflow:hidden; }
+.svc__band img{ width:100%; height:clamp(180px,26vw,300px); object-fit:cover; filter:grayscale(.6) brightness(.5); }
+.svc__band .txt{
+  position:absolute; inset:0; display:grid; place-items:center; text-align:center;
+  font-family:var(--ff-jp-disp); font-size:clamp(17px,2.6vw,28px); letter-spacing:.16em; line-height:2;
+}
+
+/* ============================================================
+   STANDARD
+   ============================================================ */
+.standard{ background:var(--ink); }
+.std{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(24px,4vw,56px); margin-top:52px; }
+.std__item{ border-top:1px solid var(--steel); padding-top:26px; }
+.std__k{
+  font-family:var(--ff-sign); font-size:12px; letter-spacing:.28em; text-transform:uppercase; color:var(--yamabuki);
+  margin:0 0 16px;
+}
+.std__item h3{
+  font-family:var(--ff-jp-disp); font-weight:500; font-size:clamp(18px,2.1vw,22px);
+  letter-spacing:.07em; line-height:1.7; margin:0 0 14px;
+}
+.std__item p{ color:var(--snow-dim); font-size:14px; margin:0; }
+
+/* ============================================================
+   FLOW（停車駅）
+   ============================================================ */
+.flow{ background:var(--ink-deep); }
+.stations{ margin-top:60px; position:relative; }
+.stations::before{
+  content:""; position:absolute; left:7px; top:12px; bottom:12px; width:1px; background:var(--steel);
+}
+.stn{ position:relative; padding:0 0 46px 46px; }
+.stn:last-child{ padding-bottom:0; }
+.stn::before{
+  content:""; position:absolute; left:2px; top:11px; width:11px; height:11px; border-radius:50%;
+  border:1px solid var(--asagi); background:var(--ink-deep);
+}
+.stn::after{
+  content:""; position:absolute; left:6px; top:11px; width:3px; height:3px; border-radius:50%;
+  background:var(--asagi-lt); transform:translate(-1px,4px); opacity:0; transition:opacity .5s;
+}
+.stn.in::after{ opacity:1; }
+.stn__no{ font-family:var(--ff-mono); font-size:11px; letter-spacing:.2em; color:var(--snow-faint); }
+.stn h3{
+  font-family:var(--ff-jp-disp); font-weight:500; font-size:clamp(19px,2.3vw,25px);
+  letter-spacing:.09em; margin:8px 0 12px;
+}
+.stn p{ color:var(--snow-dim); font-size:14px; margin:0; max-width:46em; }
+
+/* ============================================================
+   MESSAGE
+   ============================================================ */
+.message{ background:var(--ink); position:relative; overflow:hidden; }
+.message__bg{ position:absolute; inset:0; }
+.message__bg img{ width:100%; height:100%; object-fit:cover; filter:grayscale(.8) brightness(.3); }
+.message__bg::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg, var(--ink) 8%, rgba(16,24,37,.86) 52%, rgba(16,24,37,.55) 100%);
+}
+.message .wrap{ position:relative; z-index:2; }
+.msg{ display:flex; gap:clamp(28px,5vw,72px); align-items:flex-start; margin-top:44px; }
+.msg__vert{
+  writing-mode:vertical-rl; font-family:var(--ff-jp-disp); font-weight:500;
+  font-size:clamp(20px,2.7vw,30px); line-height:2.15; letter-spacing:.14em;
+  max-height:min(64vh,560px); flex:none;
+}
+.msg__vert .ac{ color:var(--yamabuki); }
+.msg__text{ padding-top:6px; }
+.msg__text p{ color:var(--snow-dim); margin:0 0 20px; max-width:38em; }
+.msg__sign{ margin-top:36px; border-top:1px solid var(--steel); padding-top:20px; display:flex; align-items:baseline; gap:16px; }
+.msg__sign .role{ font-family:var(--ff-mono); font-size:11px; letter-spacing:.14em; color:var(--snow-faint); }
+.msg__sign .name{ font-family:var(--ff-jp-disp); font-size:22px; letter-spacing:.16em; }
+
+/* ============================================================
+   COMPANY
+   ============================================================ */
+.company{ background:var(--ink-soft); }
+.tbl{ margin-top:48px; border-top:1px solid var(--steel); }
+.tbl dl{ display:grid; grid-template-columns:200px 1fr; gap:0; margin:0; border-bottom:1px solid var(--steel-2); }
+.tbl dt{
+  font-family:var(--ff-mono); font-size:11px; letter-spacing:.16em; color:var(--asagi-lt);
+  padding:22px 0; text-transform:uppercase;
+}
+.tbl dd{ margin:0; padding:22px 0; color:var(--snow); font-size:14.5px; }
+.tbl dd .jp{ display:block; font-family:var(--ff-mono); font-size:10px; color:var(--snow-faint); letter-spacing:.1em; margin-top:4px; }
+.tbl dd .tbc{ color:var(--yamabuki); font-family:var(--ff-mono); font-size:11px; letter-spacing:.1em; }
+
+/* ============================================================
+   フッター
+   ============================================================ */
+.ft{ background:var(--ink-deep); padding:clamp(56px,7vw,84px) 0 34px; border-top:1px solid var(--steel-2); }
+.ft__top{ display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; }
+.ft__mark{ font-family:var(--ff-sign); font-size:clamp(46px,8vw,96px); font-weight:300; letter-spacing:.06em; line-height:.9; margin:0; }
+.ft__mark span{ color:var(--asagi); }
+.ft__addr{ font-family:var(--ff-mono); font-size:11px; line-height:2.2; letter-spacing:.1em; color:var(--snow-faint); text-align:right; }
+.ft__nav{ display:flex; gap:24px; flex-wrap:wrap; margin-top:44px; padding-top:24px; border-top:1px solid var(--steel-2); }
+.ft__nav a{ font-family:var(--ff-sign); font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:var(--snow-dim); transition:color .3s; }
+.ft__nav a:hover{ color:var(--asagi-lt); }
+.ft__cr{ margin:30px 0 0; font-family:var(--ff-mono); font-size:10px; letter-spacing:.12em; color:var(--snow-faint); }
+
+/* ============================================================
+   レスポンシブ
+   ============================================================ */
+@media (max-width:1000px){
+  .concept__grid{ grid-template-columns:1fr; }
+  .concept__fig{ order:-1; }
+  .concept__fig figcaption{ position:static; margin-top:10px; }
+  .std{ grid-template-columns:1fr; }
+  .intro__grid{ grid-template-columns:1fr; }
+}
+@media (max-width:820px){
+  :root{ --rail-x:0px; }
+  .rail{ display:none; }
+  .gnav{
+    position:fixed; inset:0; background:rgba(10,16,26,.97); backdrop-filter:blur(10px);
+    display:grid; place-items:center; opacity:0; visibility:hidden; transition:opacity .4s ease, visibility .4s;
+  }
+  .gnav.open{ opacity:1; visibility:visible; }
+  .gnav ul{ flex-direction:column; gap:26px; text-align:center; }
+  .gnav a{ font-size:20px; letter-spacing:.28em; }
+  .burger{
+    display:block; position:relative; z-index:80; width:38px; height:38px;
+    background:none; border:0; cursor:pointer; padding:0;
+  }
+  .burger i{
+    position:absolute; left:7px; width:24px; height:1px; background:var(--snow);
+    transition:transform .4s cubic-bezier(.16,.8,.3,1), opacity .3s;
+  }
+  .burger i:nth-child(1){ top:14px; } .burger i:nth-child(2){ top:23px; }
+  .burger.on i:nth-child(1){ transform:translateY(4.5px) rotate(36deg); }
+  .burger.on i:nth-child(2){ transform:translateY(-4.5px) rotate(-36deg); }
+  .hero__inner{ flex-direction:column; align-items:flex-start; padding-left:var(--pad-x); }
+  .hero__copy{ writing-mode:horizontal-tb; }
+  .hero__copy h1{ letter-spacing:.06em; line-height:1.72; }
+  .hero__copy .sub{
+    writing-mode:horizontal-tb; margin:0 0 18px; padding:0 0 12px;
+    border-right:0; border-bottom:1px solid var(--steel); display:inline-block; letter-spacing:.22em; font-size:11px;
+  }
+  .hero__meta{ text-align:left; }
+  .hero__scroll{ display:none; }
+  .svc{ grid-template-columns:1fr; }
+  .msg{ flex-direction:column; }
+  .msg__vert{ writing-mode:horizontal-tb; max-height:none; letter-spacing:.08em; line-height:1.95; }
+  .tbl dl{ grid-template-columns:1fr; }
+  .tbl dt{ padding-bottom:0; } .tbl dd{ padding-top:8px; }
+  .ft__addr{ text-align:left; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  .rv{ opacity:1; transform:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== ヘッダー ===== -->
+<header class="hd" id="hd">
+  <a href="#top" class="logo" aria-label="株式会社Buddy ホーム">
+    <b>BUDD<span>Y</span></b>
+    <small>株式会社Buddy</small>
+  </a>
+  <nav class="gnav" id="gnav">
+    <ul>
+      <li><a href="#concept">Concept</a></li>
+      <li><a href="#service">Service</a></li>
+      <li><a href="#standard">Standard</a></li>
+      <li><a href="#flow">Flow</a></li>
+      <li><a href="#message">Message</a></li>
+      <li><a href="#company">Company</a></li>
+    </ul>
+  </nav>
+  <button class="burger" id="burger" aria-label="メニューを開く" aria-expanded="false" aria-controls="gnav">
+    <i></i><i></i>
+  </button>
+</header>
+
+<!-- ===== シグネチャー：左端の軌道（スクロール進行インジケーター） ===== -->
+<div class="rail" id="rail" aria-hidden="true">
+  <div class="rail__ties" id="railTies"></div>
+  <div class="rail__line a"></div>
+  <div class="rail__line b"></div>
+  <div class="rail__prog" id="railProg"></div>
+  <div class="rail__stops" id="railStops"></div>
+  <div class="rail__car" id="railCar"></div>
+</div>
+
+<!-- ===== ヒーロー ===== -->
+<section class="hero" id="top">
+  <div class="hero__bg">
+    <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=2000&q=80"
+         alt="夜の東京、湾岸と高架のある街並み"
+         onerror="this.onerror=null;this.src='https://picsum.photos/seed/buddy-hero/2000/1200';">
+  </div>
+  <div class="hero__veil"></div>
+  <div class="hero__track"><svg id="trackSvg" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <p class="sub">東京・浜松町／営業代行</p>
+      <h1>伴走という、<br><span class="ac">営業</span>のかたち。</h1>
+    </div>
+    <div class="hero__meta">
+      <p class="en">Sales Partner for Your Next Destination</p>
+      <p class="loc">35.6553&deg;N, 139.7570&deg;E — Hamamatsucho, Minato-ku, Tokyo</p>
+    </div>
+  </div>
+  <p class="hero__scroll">Scroll</p>
+</section>
+
+<!-- ===== イントロ ===== -->
+<section class="sec sec--rail intro" data-stop="Buddy">
+  <div class="wrap">
+    <div class="intro__grid">
+      <p class="rv">
+        Buddy とは、同じ方向へ、同じ速度で進む相手のこと。<br>
+        私たちは支援者でも外注先でもなく、クライアントの営業チームの一員として、
+        同じ数字を追いかけます。
+      </p>
+      <p class="word rv" data-d="1">SIDE&nbsp;BY&nbsp;<i>SIDE</i></p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONCEPT ===== -->
+<section class="sec sec--rail concept" id="concept" data-stop="Concept">
+  <div class="wrap">
+    <div class="concept__grid">
+      <div class="concept__body">
+        <p class="eyebrow rv">Concept <span class="jp">併走</span></p>
+        <h2 class="h2 rv" data-d="1">二本のレールは、<br>離れないから<em>速い</em>。</h2>
+        <p class="rv" data-d="2">
+          軌道が一本では、車両は進めません。二本のレールが同じ間隔を保ったまま、
+          同じ方向へ伸びていく。その距離が変わらないことだけが、速度を許します。
+        </p>
+        <p class="rv" data-d="2">
+          営業代行に求められるのは、うまく話す力よりも、<strong>離れないこと</strong>だと考えています。
+          事業の背景を理解し、現場の温度を共有し、断られた理由まで持ち帰る。
+          その距離感を保ち続けることが、Buddy の仕事です。
+        </p>
+        <p class="rv" data-d="3">
+          浜松町は、羽田へ向かうモノレールの起点です。
+          出発の街に本社を構える私たちは、目的地までの区間を、隣のレールとして併走します。
+        </p>
+        <p class="pull rv" data-d="3">売って終わらせない。<br>走り方ごと、置いていく。</p>
+      </div>
+      <figure class="concept__fig rv" data-d="1">
+        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
+             alt="打ち合わせをするビジネスチーム"
+             onerror="this.onerror=null;this.src='https://picsum.photos/seed/buddy-concept/1000/1250';">
+        <figcaption>FIG. 01 — 同じ数字を、同じ席で見る。</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICE ===== -->
+<section class="sec sec--rail service" id="service" data-stop="Service">
+  <div class="wrap">
+    <p class="eyebrow rv">Service <span class="jp">事業内容</span></p>
+    <h2 class="h2 rv" data-d="1">営業代行。<br>設計から現場まで、通しで。</h2>
+    <p class="lead rv" data-d="2">
+      リストをただ潰す作業は代行しません。誰に、何を、どの順で伝えるか。
+      設計と実行を同じチームが担い、結果を設計へ戻し続けます。
+    </p>
+
+    <!-- 提供サービスの区分・名称はクライアント確認のうえ調整してください -->
+    <div class="svc">
+      <div class="svc__item rv">
+        <p class="svc__no">S / 01</p>
+        <h3>新規開拓の代行</h3>
+        <p>ターゲットの選定からリスト構築、初回接点の獲得までを一貫して担当します。断られた理由を記録し、次の一件の精度に変えます。</p>
+        <ul><li>TARGETING</li><li>LIST</li><li>APPROACH</li></ul>
+      </div>
+      <div class="svc__item rv" data-d="1">
+        <p class="svc__no">S / 02</p>
+        <h3>インサイドセールス</h3>
+        <p>問い合わせや展示会で生まれた接点を、商談化まで温度を落とさず運びます。追客のタイミングと頻度を数値で管理します。</p>
+        <ul><li>NURTURING</li><li>FOLLOW-UP</li><li>SCORING</li></ul>
+      </div>
+      <div class="svc__item rv" data-d="2">
+        <p class="svc__no">S / 03</p>
+        <h3>商談代行・クロージング支援</h3>
+        <p>貴社の名刺を預かる立場として商談に臨みます。提案内容のすり合わせから条件調整まで、現場の判断を共有しながら進めます。</p>
+        <ul><li>MEETING</li><li>PROPOSAL</li><li>CLOSING</li></ul>
+      </div>
+      <div class="svc__item rv" data-d="3">
+        <p class="svc__no">S / 04</p>
+        <h3>営業組織の立ち上げ支援</h3>
+        <p>スクリプト、トークの型、管理指標、教育の手順を言語化して残します。契約が終わったあとも、社内で回り続ける状態をつくります。</p>
+        <ul><li>PLAYBOOK</li><li>KPI DESIGN</li><li>TRAINING</li></ul>
+      </div>
+    </div>
+
+    <div class="svc__band rv" data-d="1">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1800&q=80"
+           alt="オフィスの執務スペース"
+           onerror="this.onerror=null;this.src='https://picsum.photos/seed/buddy-band/1800/600';">
+      <p class="txt">一件の受注は、<br>一本の線として残る。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STANDARD ===== -->
+<section class="sec sec--rail standard" id="standard" data-stop="Standard">
+  <div class="wrap">
+    <p class="eyebrow rv">Standard <span class="jp">三つの基準</span></p>
+    <h2 class="h2 rv" data-d="1">私たちが、崩さないこと。</h2>
+    <div class="std">
+      <div class="std__item rv" data-d="1">
+        <p class="std__k">Ⅰ — Inside</p>
+        <h3>自社の営業として動く</h3>
+        <p>外部の立場に留まりません。事業の言葉を覚え、社内会議に出る前提で情報を揃え、判断のスピードに合わせます。</p>
+      </div>
+      <div class="std__item rv" data-d="2">
+        <p class="std__k">Ⅱ — Open</p>
+        <h3>数字を、隠さない</h3>
+        <p>架電数も、失注も、手応えのなかった週も、そのまま共有します。都合のよい報告は、次の判断を遅らせるだけです。</p>
+      </div>
+      <div class="std__item rv" data-d="3">
+        <p class="std__k">Ⅲ — Handover</p>
+        <h3>型を、置いていく</h3>
+        <p>属人的な成果で終わらせません。再現できる手順に落とし込み、貴社の資産として引き渡すところまでを仕事とします。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FLOW ===== -->
+<section class="sec sec--rail flow" id="flow" data-stop="Flow">
+  <div class="wrap">
+    <p class="eyebrow rv">Flow <span class="jp">ご契約から運用まで</span></p>
+    <h2 class="h2 rv" data-d="1">出発から到着まで、<br>六つの停車駅。</h2>
+    <p class="lead rv" data-d="2">
+      案件によって区間の長さは変わりますが、通る駅は変わりません。
+      いま列車がどこにいるのかを、常に共有しながら進めます。
+    </p>
+
+    <div class="stations">
+      <div class="stn rv">
+        <p class="stn__no">STOP 01</p>
+        <h3>与件の整理</h3>
+        <p>商材、価格、これまでの営業活動、勝ちパターンと負けパターンを洗い出します。まず現在地を正確に置くところから始めます。</p>
+      </div>
+      <div class="stn rv">
+        <p class="stn__no">STOP 02</p>
+        <h3>ターゲットの設計</h3>
+        <p>市場と競合を踏まえ、当たるべき業種・規模・役職を定めます。狙いを絞るほど、一件あたりの精度が上がります。</p>
+      </div>
+      <div class="stn rv">
+        <p class="stn__no">STOP 03</p>
+        <h3>リストとスクリプトの構築</h3>
+        <p>アプローチ先リストを作成し、初回接点の台本と想定問答を用意します。着手前に貴社と読み合わせ、言葉を合わせます。</p>
+      </div>
+      <div class="stn rv">
+        <p class="stn__no">STOP 04</p>
+        <h3>アプローチの実行</h3>
+        <p>電話・メール・フォームなど、商材に合う手段で接点をつくります。反応は日次で記録し、週次で振り返ります。</p>
+      </div>
+      <div class="stn rv">
+        <p class="stn__no">STOP 05</p>
+        <h3>商談と引き渡し</h3>
+        <p>獲得した商談に同席、または代行します。貴社が対応する場合も、背景と温度を添えて引き渡します。</p>
+      </div>
+      <div class="stn rv">
+        <p class="stn__no">STOP 06</p>
+        <h3>改善と定着</h3>
+        <p>数字をもとに設計へ戻り、当たる型を更新します。最終的には、貴社だけで運用できる状態を目指します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MESSAGE ===== -->
+<section class="sec sec--rail message" id="message" data-stop="Message">
+  <div class="message__bg">
+    <img src="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1800&q=80"
+         alt="早朝の都市の高層ビル群"
+         onerror="this.onerror=null;this.src='https://picsum.photos/seed/buddy-message/1800/1200';">
+  </div>
+  <div class="wrap">
+    <p class="eyebrow rv">Message <span class="jp">代表メッセージ</span></p>
+    <!-- 以下の代表メッセージは草案です。代表者ご本人の確認・加筆をお願いします -->
+    <div class="msg">
+      <p class="msg__vert rv" data-d="1">
+        売れない理由は、<br>だいたい<span class="ac">現場</span>にある。
+      </p>
+      <div class="msg__text">
+        <p class="rv" data-d="2">
+          営業は、資料の出来だけで決まる仕事ではありません。
+          誰にいつ会うか、どの言葉で切り出すか、断られた後にどう残るか。
+          結果を左右するのは、そうした細部の積み重ねです。
+        </p>
+        <p class="rv" data-d="2">
+          だからこそ私たちは、外から助言する立場ではなく、現場に入る立場を選びました。
+          同じリストを見て、同じ受話器を持ち、同じ数字に責任を持つ。
+          その距離でしか見えないものがあると考えています。
+        </p>
+        <p class="rv" data-d="3">
+          社名の Buddy には、隣で走り続ける相手でありたいという意味を込めました。
+          売上をつくることはもちろん、走り方そのものが貴社に残るまで、併走します。
+        </p>
+        <div class="msg__sign rv" data-d="3">
+          <span class="role">代表取締役 / CEO</span>
+          <span class="name">大平 拓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPANY ===== -->
+<section class="sec sec--rail company" id="company" data-stop="Company">
+  <div class="wrap">
+    <p class="eyebrow rv">Company <span class="jp">会社概要</span></p>
+    <h2 class="h2 rv" data-d="1">会社概要</h2>
+    <div class="tbl rv" data-d="2">
+      <dl>
+        <dt>Company</dt>
+        <dd>株式会社Buddy<span class="jp">Buddy Inc.</span></dd>
+      </dl>
+      <dl>
+        <dt>Representative</dt>
+        <dd>代表取締役　大平 拓</dd>
+      </dl>
+      <dl>
+        <dt>Address</dt>
+        <dd>〒105-0013　東京都港区浜松町1-18-13　高桑ビル3F<span class="jp">JR 浜松町駅／都営 大門駅</span></dd>
+      </dl>
+      <dl>
+        <dt>Business</dt>
+        <dd>営業代行</dd>
+      </dl>
+      <!-- 以下3項目は実際の登記内容に差し替えてください 
+      <dl>
+        <dt>Founded</dt>
+        <dd><span class="tbc">※設立年月を記載（要確認）</span></dd>
+      </dl>
+      <dl>
+        <dt>Capital</dt>
+        <dd><span class="tbc">※資本金を記載（要確認）</span></dd>
+      </dl>
+      <dl>
+        <dt>Members</dt>
+        <dd><span class="tbc">※従業員数を記載（要確認）</span></dd>
+      </dl>
+      -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== フッター ===== -->
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft__top">
+      <p class="ft__mark">BUDD<span>Y</span></p>
+      <p class="ft__addr">
+        株式会社Buddy<br>
+        〒105-0013 東京都港区浜松町1-18-13 高桑ビル3F
+      </p>
+    </div>
+    <nav class="ft__nav">
+      <a href="#concept">Concept</a>
+      <a href="#service">Service</a>
+      <a href="#standard">Standard</a>
+      <a href="#flow">Flow</a>
+      <a href="#message">Message</a>
+      <a href="#company">Company</a>
+    </nav>
+    <p class="ft__cr">&copy; <span id="yr">2026</span> Buddy Inc. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- 年号 ---------- */
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  /* ---------- ヘッダー ---------- */
+  var hd = document.getElementById("hd");
+  var burger = document.getElementById("burger");
+  var gnav = document.getElementById("gnav");
+
+  burger.addEventListener("click", function(){
+    var open = gnav.classList.toggle("open");
+    burger.classList.toggle("on", open);
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    burger.setAttribute("aria-label", open ? "メニューを閉じる" : "メニューを開く");
+    document.body.style.overflow = open ? "hidden" : "";
+  });
+  gnav.addEventListener("click", function(e){
+    if(e.target.tagName === "A"){
+      gnav.classList.remove("open");
+      burger.classList.remove("on");
+      burger.setAttribute("aria-expanded","false");
+      document.body.style.overflow = "";
+    }
+  });
+
+  /* ---------- ヒーローの軌道（消失点へ伸びる二本のレール） ---------- */
+  function drawTrack(){
+    var svg = document.getElementById("trackSvg");
+    if(!svg) return;
+    var W = 1000, H = 620;
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+
+    var vx = W * 0.30, vy = H * 0.46;      // 消失点
+    var lx = -W * 0.28, rx = W * 0.42;     // 手前のレール位置
+    var by = H + 30;
+
+    var ns = "http://www.w3.org/2000/svg";
+    var frag = document.createDocumentFragment();
+
+    // 枕木（遠近に応じて間隔が詰まる）
+    var ties = document.createElementNS(ns, "g");
+    for(var i = 0; i < 34; i++){
+      var t = Math.pow(i / 34, 2.35);          // 0(手前) → 1(奥)
+      var y = by + (vy - by) * t;
+      var x1 = lx + (vx - lx) * t;
+      var x2 = rx + (vx - rx) * t;
+      var ln = document.createElementNS(ns, "line");
+      ln.setAttribute("x1", x1); ln.setAttribute("y1", y);
+      ln.setAttribute("x2", x2); ln.setAttribute("y2", y);
+      ln.setAttribute("stroke", "#E9EDF1");
+      ln.setAttribute("stroke-opacity", (0.13 * (1 - t * 0.82)).toFixed(3));
+      ln.setAttribute("stroke-width", (1.6 * (1 - t * 0.7)).toFixed(2));
+      ties.appendChild(ln);
+    }
+    frag.appendChild(ties);
+
+    // 二本のレール
+    [[lx, "#E9EDF1", .34], [rx, "#E9EDF1", .34]].forEach(function(r){
+      var ln = document.createElementNS(ns, "line");
+      ln.setAttribute("x1", r[0]); ln.setAttribute("y1", by);
+      ln.setAttribute("x2", vx);   ln.setAttribute("y2", vy);
+      ln.setAttribute("stroke", r[1]);
+      ln.setAttribute("stroke-opacity", r[2]);
+      ln.setAttribute("stroke-width", "1.1");
+      frag.appendChild(ln);
+    });
+
+    // 走行する光（同じ間隔を保った二点）
+    if(!reduce){
+      [lx, rx].forEach(function(sx, idx){
+        var c = document.createElementNS(ns, "circle");
+        c.setAttribute("r", "3.4");
+        c.setAttribute("fill", idx === 0 ? "#4FC2C9" : "#DDA82F");
+        c.setAttribute("opacity", "0");
+        var anim = document.createElementNS(ns, "animate");
+        var am = document.createElementNS(ns, "animateMotion");
+        am.setAttribute("path", "M" + sx + "," + by + " L" + vx + "," + vy);
+        am.setAttribute("dur", "5.6s");
+        am.setAttribute("repeatCount", "indefinite");
+        am.setAttribute("keyPoints", "0;1");
+        am.setAttribute("keyTimes", "0;1");
+        am.setAttribute("calcMode", "spline");
+        am.setAttribute("keySplines", "0.3 0 0.75 1");
+        anim.setAttribute("attributeName", "opacity");
+        anim.setAttribute("values", "0;0.95;0.85;0");
+        anim.setAttribute("keyTimes", "0;0.15;0.7;1");
+        anim.setAttribute("dur", "5.6s");
+        anim.setAttribute("repeatCount", "indefinite");
+        c.appendChild(am); c.appendChild(anim);
+        frag.appendChild(c);
+      });
+    }
+
+    svg.innerHTML = "";
+    svg.appendChild(frag);
+  }
+  drawTrack();
+
+  /* ---------- 左端の軌道インジケーター ---------- */
+  var rail = document.getElementById("rail");
+  var railTies = document.getElementById("railTies");
+  var railProg = document.getElementById("railProg");
+  var railCar = document.getElementById("railCar");
+  var railStops = document.getElementById("railStops");
+  var stopEls = [];
+  var sections = [].slice.call(document.querySelectorAll("[data-stop]"));
+
+  function buildRail(){
+    var h = window.innerHeight;
+    // 枕木
+    var t = "";
+    for(var y = 0; y < h; y += 15){ t += '<i class="rail__tie" style="top:' + y + 'px"></i>'; }
+    railTies.innerHTML = t;
+    // 停車駅マーカー
+    railStops.innerHTML = "";
+    stopEls = sections.map(function(sec){
+      var el = document.createElement("div");
+      el.className = "rail__stop";
+      el.innerHTML = "<span>" + sec.getAttribute("data-stop") + "</span>";
+      railStops.appendChild(el);
+      return el;
+    });
+    placeStops();
+  }
+
+  function placeStops(){
+    var doc = document.documentElement;
+    var total = doc.scrollHeight - window.innerHeight;
+    if(total <= 0) return;
+    var h = window.innerHeight;
+    sections.forEach(function(sec, i){
+      var target = sec.offsetTop - window.innerHeight * 0.35;
+      var ratio = Math.min(Math.max(target / total, 0), 1);
+      stopEls[i].style.top = (ratio * h) + "px";
+    });
+  }
+
+  function onScroll(){
+    var y = window.pageYOffset;
+    var doc = document.documentElement;
+    var total = doc.scrollHeight - window.innerHeight;
+    var p = total > 0 ? Math.min(Math.max(y / total, 0), 1) : 0;
+    var h = window.innerHeight;
+
+    hd.classList.toggle("stuck", y > 40);
+    rail.classList.toggle("on", y > window.innerHeight * 0.55);
+
+    railProg.style.height = (p * h) + "px";
+    railCar.style.top = (p * h) + "px";
+
+    // 現在の区間
+    var act = -1;
+    sections.forEach(function(sec, i){
+      if(y >= sec.offsetTop - window.innerHeight * 0.4) act = i;
+    });
+    stopEls.forEach(function(el, i){ el.classList.toggle("act", i === act); });
+  }
+
+  buildRail();
+  onScroll();
+
+  var ticking = false;
+  window.addEventListener("scroll", function(){
+    if(!ticking){
+      window.requestAnimationFrame(function(){ onScroll(); ticking = false; });
+      ticking = true;
+    }
+  }, { passive:true });
+
+  var rt;
+  window.addEventListener("resize", function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ buildRail(); drawTrack(); onScroll(); }, 180);
+  });
+  window.addEventListener("load", function(){ placeStops(); onScroll(); });
+
+  /* ---------- スクロールリビール ---------- */
+  var targets = document.querySelectorAll(".rv, .stn");
+  if("IntersectionObserver" in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, { threshold:0.14, rootMargin:"0px 0px -8% 0px" });
+    [].forEach.call(targets, function(el){ io.observe(el); });
+  }else{
+    [].forEach.call(targets, function(el){ el.classList.add("in"); });
+  }
+})();
+</script>
+</body>
+</html>
